@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IoT Weather Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #74ebd5, #acb6e5);
+      color: #333;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 600px;
+      width: 100%;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      color: #2c3e50;
+    }
+    .card {
+      display: inline-block;
+      width: 45%;
+      margin: 10px;
+      padding: 15px;
+      background: #f9f9f9;
+      border-radius: 8px;
+    }
+    .icon {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+    .data {
+      font-size: 2em;
+      font-weight: bold;
+    }
+    .label {
+      font-size: 1.1em;
+      color: #555;
+    }
+    @media (max-width: 600px) {
+      .card {
+        width: 100%;
+        margin: 10px 0;
+      }
+    }
+  </style>
+  <script>
+    // URL to data.json on GitHub Pages
+    const dataUrl = "https://your-username.github.io/iot-weather-dashboard/data.json"; പ്ര
+
+    function updateData() {
+      fetch(dataUrl)
+        .then(response => {
+          if (!response.ok) throw new Error("Network response was not ok");
+          return response.json();
+        })
+        .then(data => {
+          document.getElementById("temperature").innerHTML = data.temperature.toFixed(1) + " °C";
+          document.getElementById("humidity").innerHTML = data.humidity.toFixed(1) + " %";
+        })
+        .catch(error => {
+          console.error("Error fetching data:", error);
+          document.getElementById("temperature").innerHTML = "Error";
+          document.getElementById("humidity").innerHTML = "Error";
+        });
+    }
+    // Update data every 2 seconds
+    setInterval(updateData, 2000);
+    // Initial update on page load
+    window.onload = updateData;
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>IoT Weather Dashboard</h1>
+    <div class="card">
+      <div class="icon">🌡️</div>
+      <div class="label">Temperature</div>
+      <div class="data" id="temperature">--</div>
+    </div>
+    <div class="card">
+      <div class="icon">💧</div>
+      <div class="label">Humidity</div>
+      <div class="data" id="humidity">--</div>
+    </div>
+  </div>
+</body>
+</html>
